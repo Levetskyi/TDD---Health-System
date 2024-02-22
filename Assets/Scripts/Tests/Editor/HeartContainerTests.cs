@@ -31,7 +31,7 @@ public class HeartContainerTests : MonoBehaviour
         }
 
         [Test]
-        public void _Empty_Hearts_Are_Replenished()
+        public void Empty_Hearts_Are_Replenished()
         {
             ((HeartContainer)A.HeartContainer().With(
                 A.Heart().With(An.Image().WithFillAmount(1)), 
@@ -41,7 +41,7 @@ public class HeartContainerTests : MonoBehaviour
         }
 
         [Test]
-        public void _Hearts_Are_Replenished_In_Order()
+        public void Hearts_Are_Replenished_In_Order()
         {
             ((HeartContainer)A.HeartContainer().With(
                 A.Heart(),
@@ -51,7 +51,7 @@ public class HeartContainerTests : MonoBehaviour
         }
 
         [Test]
-        public void _Distributes_Heart_Pieces_Across_Multiple_Unfilled_Hearts()
+        public void Distributes_Heart_Pieces_Across_Multiple_Unfilled_Hearts()
         {
             ((HeartContainer)A.HeartContainer().With(
                 A.Heart().With(An.Image().WithFillAmount(0.75f)),

@@ -1,13 +1,37 @@
 ﻿using UnityEngine;
 using System;
 
-public class Player
+public class Player : MonoBehaviour
 {
     public event EventHandler<HealedEventArgs> Healed;
     public event EventHandler<DamagedEventArgs> Damaged;
 
     public int CurrentHealth { get; private set; }
     public int MaximumtHealth { get; private set; }
+
+    private EventBinding<TestEvent> testEventBinding;
+    private EventBinding<PlayerEvent> playerEventBinding;
+
+    private void OnEnable()
+    {
+        testEventBinding = new EventBinding<TestEvent>(HandleTestEvent);
+        EventBus<TestEvent>.Register(testEventBinding);
+
+        playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent);
+        EventBus<PlayerEvent>.Register(playerEventBinding);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<TestEvent>.Deregister(testEventBinding);
+        EventBus<PlayerEvent>.Deregister(playerEventBinding);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+            EventBus<PlayerEvent>.Raise(new PlayerEvent { Health = CurrentHealth });
+    }
 
     public Player(int currentHealth, int maximumHealth = 12)
     {
@@ -39,23 +63,13 @@ public class Player
         CurrentHealth = newHealth;
     }
 
-    public class HealedEventArgs : EventArgs
+    private void HandleTestEvent()
     {
-        public int Amount { get; private set; }
-
-        public HealedEventArgs(int amount)
-        {
-            Amount = amount;
-        }
+        Debug.Log("Test event raised");
     }
 
-    public class DamagedEventArgs : EventArgs
+    private void HandlePlayerEvent(PlayerEvent playerEvent)
     {
-        public int Amount { get; private set; }
-
-        public DamagedEventArgs(int amount)
-        {
-            Amount = amount;
-        }
+        Debug.Log($"Player event raised with: {playerEvent.Health} health");
     }
 }

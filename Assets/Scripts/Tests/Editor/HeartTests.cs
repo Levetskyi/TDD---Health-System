@@ -94,7 +94,7 @@ public class HeartTests
         }
 
         [Test]
-        public void _Throws_Exception_For_Negative_Numbers_Of_Heart_Pieces()
+        public void Throws_Exception_For_Negative_Numbers_Of_Heart_Pieces()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _heart.Replenish(-1));
         }
@@ -133,7 +133,7 @@ public class HeartTests
         }
 
         [Test]
-        public void _Throws_Exception_For_Negative_Numbers_Of_Heart_Pieces()
+        public void Throws_Exception_For_Negative_Numbers_Of_Heart_Pieces()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _heart.Deplete(-1));
         }
