@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using System;
 
-public class Heart
+public class Heart 
 {
     public static readonly int HeartPiecesPerHeart = 4;
 

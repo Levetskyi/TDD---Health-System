@@ -11,34 +11,34 @@ public class HeartContainer
         _hearts = hearts;
     }
 
-    public void Replenish(int heartPieces)
+    public void Replenish(HealEvent healEvent)
     {
         foreach (var heart in _hearts)
         {
-            var toReplenish = heartPieces < heart.EmptyHeartPieces
-                ? heartPieces
+            var toReplenish = healEvent.HealAmount < heart.EmptyHeartPieces
+                ? healEvent.HealAmount
                 : heart.EmptyHeartPieces;
 
-            heartPieces -= heart.EmptyHeartPieces;
+            healEvent.HealAmount -= heart.EmptyHeartPieces;
             heart.Replenish(toReplenish);
 
-            if (heartPieces <= 0)  
+            if (healEvent.HealAmount <= 0)  
                 break;
         }
     }
 
-    public void Deplete(int heartPieces)
+    public void Deplete(DamageEvent damageEvent)
     {
         foreach(var heart in _hearts.AsEnumerable().Reverse())
         {
-            var toDeplete = heartPieces < heart.FilledHeartPieces
-                ? heartPieces
+            var toDeplete = damageEvent.DamageAmount < heart.FilledHeartPieces
+                ? damageEvent.DamageAmount
                 : heart.FilledHeartPieces;
 
-            heartPieces -= heart.FilledHeartPieces;
+            damageEvent.DamageAmount -= heart.FilledHeartPieces;
             heart.Deplete(toDeplete); 
 
-            if (heartPieces <= 0)
+            if (damageEvent.DamageAmount <= 0)
                 break;
         }
     }

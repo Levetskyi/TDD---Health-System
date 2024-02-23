@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection;
-using System;
 
 public static class EventBus<T> where T : IEvent
 {
@@ -17,65 +15,9 @@ public static class EventBus<T> where T : IEvent
 			binding.OnEventNoArgs.Invoke();
 		}
 	}
-}
 
-public static class PredefinedAssemblyUtil
-{
-	enum AssemblyType
+	private static void Clear()
 	{
-		AssemblyCSharp,
-		AssemblyCSharpEditor,
-        AssemblyCSharpFirstPass,
-        AssemblyCSharpEditorFirstPass,
-    }
-
-	static AssemblyType? GetAssemblyType(string assemblyName)
-	{
-		return assemblyName switch
-		{
-			"Assembly-CSharp" => AssemblyType.AssemblyCSharp,
-            "Assembly-CSharp-Editor" => AssemblyType.AssemblyCSharpEditor,
-            "Assembly-CSharp-firstpass" => AssemblyType.AssemblyCSharpFirstPass,
-            "Assembly-CSharp-Editor-firstpass" => AssemblyType.AssemblyCSharpEditorFirstPass,
-			_ => null
-        };
-	}
-
-	private static void AddTypesFromAssembly(Type[] assembly, ICollection<Type> types, Type interfaceType)
-	{
-		if (assembly == null)
-			return;
-
-		for (int i = 0; i < assembly.Length; i++)
-		{
-			Type type = assembly[i];
-			if (type != interfaceType && interfaceType.IsAssignableFrom(type)) 
-			{ 
-				types.Add(type); 
-			}
-		}
-	}
-
-	public static List<Type> GetTypes(Type interfaceTypes)
-	{
-		Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-		Dictionary<AssemblyType, Type[]> assemblyTypes = new();
-		List<Type> types = new();
-
-		for (int i = 0; i < assemblies.Length; i++)
-		{
-			AssemblyType? assemblyType = GetAssemblyType(assemblies[i].GetName().Name);
-
-			if (assemblyType != null)
-			{
-				assemblyTypes.Add((AssemblyType) assemblyType, assemblies[i].GetTypes());
-			}
-		}
-
-		AddTypesFromAssembly(assemblyTypes[AssemblyType.AssemblyCSharp], types, interfaceTypes);
-        AddTypesFromAssembly(assemblyTypes[AssemblyType.AssemblyCSharpFirstPass], types, interfaceTypes);
-
-        return types;
+		bindings.Clear();
 	}
 }

@@ -23,6 +23,7 @@ public class HeartContainerBuilder : TestDataBuilder<HeartContainer>
 
     public override HeartContainer Build()
     {
-        return new HeartContainer(_hearts);
+        //return new HeartContainer(_hearts);
+        return null;
     }
 }

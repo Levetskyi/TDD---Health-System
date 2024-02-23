@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System;
 
-public class Player
+public class Enemy
 {
     public int CurrentHealth { get; private set; }
     public int MaximumtHealth { get; private set; }
 
-    public Player(int currentHealth, int maximumHealth = 12)
+    public Enemy(int currentHealth, int maximumHealth = 12)
     {
         if (currentHealth < 0)
             throw new ArgumentOutOfRangeException(nameof(currentHealth));
